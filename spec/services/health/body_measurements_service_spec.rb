@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Health::BodyMeasurmentsService, type: :service do
+RSpec.describe Health::BodyMeasurementsService, type: :service do
   let(:user) { create(:user) }
   let(:service) { described_class.new(user) }
 
@@ -99,7 +99,7 @@ RSpec.describe Health::BodyMeasurmentsService, type: :service do
       expect(results).to all(satisfy { |r| r.measured_at.to_date >= start_date && r.measured_at.to_date <= end_date })
     end
 
-    it 'orders measurements by measurred_at desc' do
+    it 'orders measurements by measured_at desc' do
       results = service.get_body_measurements
       expect(results.first.measured_at).to be >= results.last.measured_at
     end

@@ -5,7 +5,7 @@ class Health::BodyMeasurement < ApplicationRecord
   validates :topic, presence: true
 
   validate :data_must_be_valid_json
-  validate :topis_must_be_valid
+  validate :topic_must_be_valid
 
   private
 
@@ -15,7 +15,7 @@ class Health::BodyMeasurement < ApplicationRecord
     end
   end
 
-  def topis_must_be_valid
+  def topic_must_be_valid
     unless HealthMeasurementsTopics.all.include?(topic)
       errors.add(:topic, "must be a valid topic")
     end

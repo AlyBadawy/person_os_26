@@ -1,16 +1,16 @@
 module Health
-  class BodyMeasurmentsService
+  class BodyMeasurementsService
     def initialize(user)
       @user = user
     end
 
-    def record_body_measurement(topic, value, unit = nil, measurred_at = Time.current)
+    def record_body_measurement(topic, value, unit = nil, measured_at = Time.current)
       validate_topic(topic)
       new_data = normalize_body_measurement_data(topic, value, unit)
       @user.health_body_measurements.create!(
         topic: topic,
         data: new_data,
-        measurred_at: measurred_at
+        measured_at: measured_at
       )
     end
 
@@ -21,9 +21,9 @@ module Health
 
       measurements = @user.health_body_measurements
       measurements = measurements.where(topic: topic) if topic.present?
-      measurements = measurements.where(measurred_at: start_date.beginning_of_day..) if start_date.present?
-      measurements = measurements.where(measurred_at: ..end_date.end_of_day) if end_date.present?
-      measurements.order(measurred_at: :desc)
+      measurements = measurements.where(measured_at: start_date.beginning_of_day..) if start_date.present?
+      measurements = measurements.where(measured_at: ..end_date.end_of_day) if end_date.present?
+      measurements.order(measured_at: :desc)
     end
 
     private
@@ -51,7 +51,7 @@ module Health
         raise ArgumentError, "Weight value must be numeric"
       end
       unless unit.present? && WeightUnits.all.include?(unit)
-          raise ArgumentError, "Unit must be a valid WeightUnit"
+        raise ArgumentError, "Unit must be a valid WeightUnit"
       end
       normalized_value = WeightConverter.convert_value(value, unit, WeightUnits.grams)
       {
