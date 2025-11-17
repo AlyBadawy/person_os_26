@@ -24,7 +24,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.before(:each) { Warden.test_mode! }
-  config.after(:each) { DatabaseCleaner.clean }
 
   Shoulda::Matchers.configure do |conf|
     conf.integrate do |with|
