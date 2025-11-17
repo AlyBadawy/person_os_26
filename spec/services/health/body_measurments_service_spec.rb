@@ -96,12 +96,12 @@ RSpec.describe Health::BodyMeasurmentsService, type: :service do
       end_date = Time.current.to_date
       results = service.get_body_measurements(start_date: start_date, end_date: end_date)
       # Should include the measurements from 2 days ago and 1 day ago (not the 3 days ago)
-      expect(results).to all(satisfy { |r| r.measurred_at.to_date >= start_date && r.measurred_at.to_date <= end_date })
+      expect(results).to all(satisfy { |r| r.measured_at.to_date >= start_date && r.measured_at.to_date <= end_date })
     end
 
     it 'orders measurements by measurred_at desc' do
       results = service.get_body_measurements
-      expect(results.first.measurred_at).to be >= results.last.measurred_at
+      expect(results.first.measured_at).to be >= results.last.measured_at
     end
   end
 end
