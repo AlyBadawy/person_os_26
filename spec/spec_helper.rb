@@ -17,7 +17,7 @@ SimpleCov.start do
   add_filter "/config/initializers/"
   track_files "lib/**/*.rb"
   track_files "app/**/*.rb"
-  # minimum_coverage (ENV.fetch("SIMPLECOV_MINIMUM_COVERAGE") { 95 }).to_i
+  minimum_coverage (ENV.fetch("SIMPLECOV_MINIMUM_COVERAGE") { 95 }).to_i
 end
 
 RSpec.configure do |config|
