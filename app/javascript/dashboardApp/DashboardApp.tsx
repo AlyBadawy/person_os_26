@@ -1,8 +1,6 @@
 import React from "react";
 
-interface DashboardProps {}
-
-export const DashboardApp: React.FC<DashboardProps> = () => {
+export const DashboardApp: React.FC = () => {
   const [count, setCount] = React.useState(0);
 
   return (
