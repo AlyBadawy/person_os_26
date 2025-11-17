@@ -7,10 +7,10 @@ RSpec.describe 'Root', type: :request do
   end
 
   it 'allows authenticated users to access authenticated root' do
-  user = create(:user, :confirmed)
-  sign_in(user, scope: :user)
+    user = create(:user, :confirmed)
+    sign_in(user, scope: :user)
 
-  get '/'
-  expect(response).to have_http_status(:ok)
+    get '/'
+    expect(response).to have_http_status(:ok)
   end
 end
