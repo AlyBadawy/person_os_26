@@ -31,7 +31,7 @@ jobs:
       - name: Install JavaScript dependencies
         run: yarn install
       - name: Scan for known security vulnerabilities in npm packages used
-        run: npx npm-audit
+        run: yarn audit
   lint:
     runs-on: ubuntu-latest
     env:
