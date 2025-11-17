@@ -23,17 +23,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.filter_rails_from_backtrace!
 
-  config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
-  config.before(:each) { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, :js) { DatabaseCleaner.strategy = :truncation }
-  config.before(:each) {
-    DatabaseCleaner.start
-    Warden.test_mode!
-  }
-  config.after(:each) {
-    DatabaseCleaner.clean
-    Warden.test_reset!
-  }
+  config.before(:each) { Warden.test_mode! }
+  config.after(:each) { DatabaseCleaner.clean }
 
   Shoulda::Matchers.configure do |conf|
     conf.integrate do |with|
