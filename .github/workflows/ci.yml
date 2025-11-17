@@ -57,8 +57,9 @@ jobs:
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
-  test:
+  test-ruby:
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       checks: write
@@ -99,3 +100,18 @@ jobs:
         run: bundle exec rspec
         env:
           SIMPLECOV_MINIMUM_COVERAGE: 95
+  test-js:
+    runs-on: ubuntu-latest
+    needs: [scan_js]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "yarn"
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+      - name: Run JS tests with coverage
+        run: yarn test
