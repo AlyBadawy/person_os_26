@@ -25,6 +25,7 @@ group :development, :test do
   gem "capybara"
   gem "database_cleaner"
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "devise"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "faker"

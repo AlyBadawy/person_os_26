@@ -39,5 +39,7 @@
 
 /node_modules
 
+/coverage
+!/coverage/.keep
 
 .DS_Store
