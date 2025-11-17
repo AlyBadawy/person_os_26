@@ -7,4 +7,6 @@ class User < ApplicationRecord
          :confirmable,
          :lockable,
          :trackable
+
+  has_many :health_body_measurements, class_name: "Health::BodyMeasurement", dependent: :destroy
 end
