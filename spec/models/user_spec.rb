@@ -74,6 +74,6 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
-    skip 'add tests for any associations if present'
+    it { is_expected.to have_many(:health_body_measurements).class_name('Health::BodyMeasurement').dependent(:destroy) }
   end
 end
