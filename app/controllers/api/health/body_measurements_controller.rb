@@ -98,7 +98,6 @@ class Api::Health::BodyMeasurementsController < ApplicationController
   end
 
   def coerce_numeric(val)
-    return val if val.is_a?(Numeric)
     return nil if val.blank?
 
     str = val.to_s
