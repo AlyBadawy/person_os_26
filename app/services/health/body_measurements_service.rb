@@ -26,6 +26,26 @@ module Health
       measurements.order(measured_at: :desc)
     end
 
+    def get_body_measurement_by_id(id)
+      @user.health_body_measurements.find(id)
+    end
+
+    def update_body_measurement_by_id(id, topic: nil, value: nil, unit: nil, measured_at: nil)
+      measurement = get_body_measurement_by_id(id)
+      update_attrs = {}
+      if topic.present?
+        validate_topic(topic)
+        update_attrs[:topic] = topic
+      end
+      if value.present?
+        normalized_data = normalize_body_measurement_data(topic || measurement.topic, value, unit)
+        update_attrs[:data] = normalized_data
+      end
+      update_attrs[:measured_at] = measured_at if measured_at.present?
+      measurement.update!(update_attrs)
+      measurement.reload
+    end
+
     private
 
     def validate_topic(topic)

@@ -43,3 +43,5 @@
 !/coverage/.keep
 
 .DS_Store
+
+.byebug_history
