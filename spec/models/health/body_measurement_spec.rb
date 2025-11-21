@@ -32,6 +32,22 @@ RSpec.describe Health::BodyMeasurement, type: :model do
       expect(measurement).not_to be_valid
       expect(measurement.errors[:topic]).to include("must be a valid topic")
     end
+
+    context 'when weight measurements' do
+      it 'validates weight data structure' do
+        measurement = build(:health_body_measurement, topic: HealthMeasurementsTopics.weight, data: { "wrong_key" => 123 })
+        expect(measurement).not_to be_valid
+        expect(measurement.errors[:data]).to include("must include 'value_in_grams' as a positive numeric field for weight measurements")
+      end
+    end
+
+    context 'when heart rate measurements' do
+      it 'validates heart rate data structure' do
+        measurement = build(:health_body_measurement, topic: HealthMeasurementsTopics.heart_rate, data: { "wrong_key" => 80 })
+        expect(measurement).not_to be_valid
+        expect(measurement.errors[:data]).to include("must include 'value' as a positive numeric field for heart rate measurements")
+      end
+    end
   end
 
   describe 'associations' do

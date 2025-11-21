@@ -9,7 +9,15 @@ class TransformResponseKeys
     if headers["Content-Type"]&.include?("application/json")
       body = ""
       response.each { |part| body << part }
-      parsed_body = JSON.parse(body)
+
+      # If there's no body, or it's not valid JSON, skip transformation.
+      begin
+        return [status, headers, response] if body.nil? || body.strip.empty?
+
+        parsed_body = JSON.parse(body)
+      rescue JSON::ParserError
+        return [status, headers, response]
+      end
 
       transformed_body = KeyTransformer.deep_transform_keys(parsed_body) do |key|
         KeyTransformer.camelize(key)

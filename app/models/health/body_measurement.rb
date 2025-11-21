@@ -6,6 +6,7 @@ class Health::BodyMeasurement < ApplicationRecord
 
   validate :data_must_be_valid_json
   validate :topic_must_be_valid
+  validate :body_measurement_data_validations
 
   private
 
@@ -22,6 +23,29 @@ class Health::BodyMeasurement < ApplicationRecord
 
     unless HealthMeasurementsTopics.all.include?(topic)
       errors.add(:topic, "must be a valid topic")
+    end
+  end
+
+  def body_measurement_data_validations
+    case topic
+    when HealthMeasurementsTopics::WEIGHT
+      validate_weight_data
+    when HealthMeasurementsTopics::HEART_RATE
+      validate_heart_rate_data
+    else
+      # No additional validations for other topics yet
+    end
+  end
+
+  def validate_weight_data
+    unless data.is_a?(Hash) && data["value_in_grams"].is_a?(Numeric) && data["value_in_grams"] > 0
+      errors.add(:data, "must include 'value_in_grams' as a positive numeric field for weight measurements")
+    end
+  end
+
+  def validate_heart_rate_data
+    unless data.is_a?(Hash) && data["value"].is_a?(Numeric) && data["value"] > 0
+      errors.add(:data, "must include 'value' as a positive numeric field for heart rate measurements")
     end
   end
 end

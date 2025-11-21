@@ -55,4 +55,26 @@ RSpec.describe TransformResponseKeys do
     expect(headers).to eq(original_headers)
     expect(response).to eq([body])
   end
+
+  it "handles empty response body gracefully" do
+    body = ""
+    mw = build_middleware_with(body, { "Content-Type" => "application/json" })
+
+    status, headers, response = mw.call({})
+
+    expect(status).to eq(200)
+    expect(headers["Content-Length"]).to eq("0")
+    expect(response).to eq([body])
+  end
+
+  it "handles invalid JSON body gracefully" do
+    body = "invalid json"
+    mw = build_middleware_with(body, { "Content-Type" => "application/json" })
+
+    status, headers, response = mw.call({})
+
+    expect(status).to eq(200)
+    expect(headers["Content-Length"]).to eq(body.bytesize.to_s)
+    expect(response).to eq([body])
+  end
 end

@@ -104,4 +104,44 @@ RSpec.describe Health::BodyMeasurementsService, type: :service do
       expect(results.first.measured_at).to be >= results.last.measured_at
     end
   end
+
+  describe '#get_body_measurement_by_id' do
+    it 'retrieves the correct measurement by ID' do
+      measurement = service.record_body_measurement(HealthMeasurementsTopics.weight, 1.5, WeightUnits.kilograms)
+      fetched = service.get_body_measurement_by_id(measurement.id)
+      expect(fetched).to eq(measurement)
+    end
+
+    it 'raises ActiveRecord::RecordNotFound for invalid ID' do
+      expect { service.get_body_measurement_by_id(0) }
+        .to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe '#update_body_measurement_by_id' do
+    let(:measurement) { service.record_body_measurement(HealthMeasurementsTopics.weight, 1.0, WeightUnits.kilograms) }
+
+    it 'updates topic when provided' do
+      updated = service.update_body_measurement_by_id(measurement.id, topic: HealthMeasurementsTopics.heart_rate, value: 70)
+      expect(updated.topic).to eq(HealthMeasurementsTopics.heart_rate)
+      expect(updated.data['value']).to eq(70)
+    end
+
+    it 'updates value and normalizes data' do
+      updated = service.update_body_measurement_by_id(measurement.id, value: 2.0, unit: WeightUnits.kilograms)
+      expect(updated.data['original_value']).to eq(2.0)
+      expect(updated.data['value_in_grams']).to be_within(0.1).of(2000.0)
+    end
+
+    it 'updates measured_at when provided' do
+      new_time = 1.week.ago
+      updated = service.update_body_measurement_by_id(measurement.id, measured_at: new_time)
+      expect(updated.measured_at.to_i).to eq(new_time.to_i)
+    end
+
+    it 'raises ActiveRecord::RecordNotFound for invalid ID' do
+      expect { service.update_body_measurement_by_id(0, value: 2.0) }
+        .to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end
