@@ -37,7 +37,7 @@ module Health
         validate_topic(topic)
         update_attrs[:topic] = topic
       end
-      if value.present?
+      unless value.nil?
         normalized_data = normalize_body_measurement_data(topic || measurement.topic, value, unit)
         update_attrs[:data] = normalized_data
       end

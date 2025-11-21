@@ -95,7 +95,7 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
     end
   end
 
-    describe 'POST /api/health/body_measurements' do
+  describe 'POST /api/health/body_measurements' do
     it 'creates a weight measurement' do
       params = { topic: HealthMeasurementsTopics.weight, value: 2.5, unit: WeightUnits.kilograms }
 

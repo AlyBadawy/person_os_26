@@ -12,6 +12,7 @@ class Health::BodyMeasurement < ApplicationRecord
 
   def data_must_be_valid_json
     return if data.blank? # handled by presence validation
+
     unless data.is_a?(Hash)
       errors.add(:data, "must be a valid JSON object")
     end

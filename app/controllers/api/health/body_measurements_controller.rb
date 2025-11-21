@@ -94,7 +94,11 @@ class Api::Health::BodyMeasurementsController < ApplicationController
   def parse_time_param(val)
     return nil if val.blank?
 
-    Time.zone.parse(val) rescue nil
+    begin
+      Time.zone.parse(val)
+    rescue ArgumentError, TypeError
+      nil
+    end
   end
 
   def coerce_numeric(val)
