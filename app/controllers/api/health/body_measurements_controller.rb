@@ -1,4 +1,6 @@
 class Api::Health::BodyMeasurementsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
     service = Health::BodyMeasurementsService.new(current_user)
 

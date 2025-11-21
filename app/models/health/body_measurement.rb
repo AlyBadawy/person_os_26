@@ -8,6 +8,27 @@ class Health::BodyMeasurement < ApplicationRecord
   validate :topic_must_be_valid
   validate :body_measurement_data_validations
 
+  def converted_data
+    case topic
+    when HealthMeasurementsTopics::WEIGHT
+      {
+        value_in_grams: data["value_in_grams"].round(2),
+        value_in_kilograms: (data["value_in_grams"] / 1000.0).round(2),
+        value_in_pounds: (data["value_in_grams"] / 453.59237).round(2),
+        value_in_stones: (data["value_in_grams"] / 6350.29318).round(2),
+        original_unit: data["original_unit"],
+        original_value: data["original_value"],
+      }
+    when HealthMeasurementsTopics::HEART_RATE
+      {
+        value: data["value"],
+        unit: "bpm",
+      }
+    else
+      data
+    end
+  end
+
   private
 
   def data_must_be_valid_json

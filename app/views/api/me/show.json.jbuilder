@@ -1,0 +1,4 @@
+json.me do
+  json.id @user.id
+  json.email @user.email
+end

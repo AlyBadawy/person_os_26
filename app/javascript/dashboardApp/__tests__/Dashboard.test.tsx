@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import { DashboardApp } from "../DashboardApp";
+import { Dashboard } from "../Dashboard";
 
 test("renders header and counter works", async () => {
   const user = userEvent.setup();
-  render(<DashboardApp />);
+  render(<Dashboard />);
 
   expect(screen.getByText(/Welcome to Your Dashboard/i)).toBeInTheDocument();
 
