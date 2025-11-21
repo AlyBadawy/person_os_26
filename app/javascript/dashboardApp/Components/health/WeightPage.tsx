@@ -1,6 +1,6 @@
 import { useGetBodyMeasurementsQuery } from "@/dashboardApp/store/api/BodyMeasurementsApiSlice";
 import { setWeightUnit } from "@/dashboardApp/store/slices/UnitsSlice";
-import { useAppDispatch, useAppSelect } from "@/dashboardApp/store/store";
+import { useAppDispatch, useAppSelector } from "@/dashboardApp/store/store";
 import {
   allWeightUnits,
   WeightUnitEnum,
@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { AddWeight } from "./AddWeight";
 import { WeightChart } from "./WeightChart";
-import { WeightTable } from "./weightTable";
+import { WeightTable } from "./WeightTable";
 
 export const WeightPage: React.FC = () => {
   const { data, isLoading } = useGetBodyMeasurementsQuery();
@@ -24,7 +24,7 @@ export const WeightPage: React.FC = () => {
   }, [data]);
 
   const dispatch = useAppDispatch();
-  const weightUnit = useAppSelect((state) => state.units.weightUnit);
+  const weightUnit = useAppSelector((state) => state.units.weightUnit);
   const handleUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newUnit = e.target.value as WeightUnitEnum;
     dispatch(setWeightUnit(newUnit));

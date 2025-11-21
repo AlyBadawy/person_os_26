@@ -12,12 +12,12 @@ class Health::BodyMeasurement < ApplicationRecord
     case topic
     when HealthMeasurementsTopics::WEIGHT
       {
-        value_in_grams: data["value_in_grams"].round(2),
-        value_in_kilograms: (data["value_in_grams"] / 1000.0).round(2),
-        value_in_pounds: (data["value_in_grams"] / 453.59237).round(2),
-        value_in_stones: (data["value_in_grams"] / 6350.29318).round(2),
         original_unit: data["original_unit"],
         original_value: data["original_value"],
+        value_in_grams: data["value_in_grams"].round(2),
+        value_in_kilograms: WeightConverter.convert_value(data["original_value"], data["original_unit"], WeightUnits.kilograms),
+        value_in_pounds: WeightConverter.convert_value(data["original_value"], data["original_unit"], WeightUnits.pounds),
+        value_in_stones: WeightConverter.convert_value(data["original_value"], data["original_unit"], WeightUnits.stones),
       }
     when HealthMeasurementsTopics::HEART_RATE
       {

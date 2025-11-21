@@ -6,6 +6,7 @@ interface BodyMeasurementPayload {
   value: number;
   unit: WeightDisplayUnitEnum;
   measuredAt: Date;
+  topic: string;
 }
 
 export interface BodyMeasurement {

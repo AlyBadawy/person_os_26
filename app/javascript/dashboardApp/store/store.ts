@@ -19,4 +19,4 @@ export type AppDispatch = typeof store.dispatch;
 
 // Typed hooks for use throughout the app
 export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelect: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

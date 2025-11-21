@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Dashboard } from "./componnets/dashboard/Dashboard";
+import { Dashboard } from "./Components/dashboard/Dashboard";
 import { PageNotFound } from "./PageNotFound";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import AppLayout from "./componnets/AppLayout";
-import { HealthLayout } from "./componnets/health/HealthLayout";
-import { HealthOverview } from "./componnets/health/HealthOverview";
-import { WeightPage } from "./componnets/health/WeightPage";
-import { HeartPage } from "./componnets/health/HeartPage";
+import AppLayout from "./Components/AppLayout";
+import { HealthLayout } from "./Components/health/HealthLayout";
+import { HealthOverview } from "./Components/health/HealthOverview";
+import { WeightPage } from "./Components/health/WeightPage";
+import { HeartPage } from "./Components/health/HeartPage";
 
 export const DashboardApp = () => {
   return (

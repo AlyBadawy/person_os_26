@@ -1,5 +1,5 @@
 import { BodyMeasurement } from "@/dashboardApp/store/api/BodyMeasurementsApiSlice";
-import { useAppSelect } from "@/dashboardApp/store/store";
+import { useAppSelector } from "@/dashboardApp/store/store";
 import {
   CartesianGrid,
   Line,
@@ -18,7 +18,7 @@ export const WeightChart = ({
 }: {
   weightMeasurements: BodyMeasurement[];
 }) => {
-  const weightUnit = useAppSelect((state) => state.units.weightUnit);
+  const weightUnit = useAppSelector((state) => state.units.weightUnit);
 
   const chartDataConverted = useMemo(() => {
     return weightMeasurements.map((m, idx) => {
@@ -34,7 +34,7 @@ export const WeightChart = ({
         id: m.id,
         data: m.data,
         time: new Date(timeMs).toISOString(),
-        label: m.measuredAt.toLocaleString(undefined, {
+        label: new Date(m.measuredAt).toLocaleString(undefined, {
           month: "short",
           day: "numeric",
         }),

@@ -1,10 +1,11 @@
 import { useAddBodyMeasurementMutation } from "@/dashboardApp/store/api/BodyMeasurementsApiSlice";
+import { WeightDisplayUnitEnum } from "@/dashboardApp/types/WeightUnits";
 import React from "react";
 
 export const AddWeight: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const [addBodyMeasurement] = useAddBodyMeasurementMutation();
-  const [unit, setUnit] = React.useState<"kilograms" | "pounds" | "stones">(
-    "kilograms"
+  const [unit, setUnit] = React.useState<WeightDisplayUnitEnum>(
+    WeightDisplayUnitEnum.Kilograms
   );
   const [value, setValue] = React.useState<number>(0);
   const [measureAt, setMeasureAt] = React.useState<string>(
@@ -14,7 +15,7 @@ export const AddWeight: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const handleAdd = () => {
     const payload = {
       unit,
-      value: typeof value === "number" ? value : 0,
+      value,
       measuredAt: new Date(measureAt),
       topic: "weight",
     };
@@ -46,9 +47,7 @@ export const AddWeight: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
             <span className="text-sm text-slate-500">Units</span>
             <select
               value={unit}
-              onChange={(e) =>
-                setUnit(e.target.value as "kilograms" | "pounds" | "stones")
-              }
+              onChange={(e) => setUnit(e.target.value as WeightDisplayUnitEnum)}
               className="mt-1 block w-full rounded-md border-gray-200 shadow-sm p-2 bg-white"
             >
               <option value="kilograms">Kilograms (kg)</option>

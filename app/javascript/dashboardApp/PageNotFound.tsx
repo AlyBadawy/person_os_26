@@ -32,7 +32,7 @@ export const PageNotFound: React.FC = () => {
             href="#"
             onClick={(e) => e.preventDefault()}
             className="text-sm text-indigo-600 hover:underline self-center"
-            aria-disabled
+            aria-disabled="true"
           >
             Report an issue
           </a>

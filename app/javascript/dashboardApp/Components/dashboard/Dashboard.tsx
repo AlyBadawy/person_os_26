@@ -3,7 +3,7 @@ import React from "react";
 import { FiClock, FiCheck } from "react-icons/fi";
 import { DashboardCalendar } from "./DashboardCalendar";
 import { DashboardHealth } from "./DashboardHealth";
-import { DahboardHabits } from "./DahboardHabits";
+import { DashboardHabits } from "./DashboardHabits";
 import { useAppDispatch } from "../../store/store";
 import { closeSidebar } from "../../store/slices/LayoutSlice";
 
@@ -54,7 +54,7 @@ export const Dashboard = () => {
           {/* Right column - Health + Habits */}
           <section className="space-y-6">
             <DashboardHealth />
-            <DahboardHabits />
+            <DashboardHabits />
           </section>
         </main>
 
