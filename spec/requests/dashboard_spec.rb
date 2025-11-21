@@ -13,7 +13,7 @@ RSpec.describe "Dashboard", type: :request do
     user = create(:user, :confirmed)
     sign_in(user, scope: :user)
     get "/"
-    expect(response).to render_template(:index)
+    expect(response).to render_template(:home)
   end
 
   it "returns a 200 status code" do
