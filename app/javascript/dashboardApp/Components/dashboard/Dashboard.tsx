@@ -1,11 +1,11 @@
-import { useGetMeQuery } from "@/dashboardApp/store/api/MeApiSlice";
 import React from "react";
 import { FiClock, FiCheck } from "react-icons/fi";
 import { DashboardCalendar } from "./DashboardCalendar";
 import { DashboardHealth } from "./DashboardHealth";
-import { DashboardHabits } from "./DashboardHabits";
 import { useAppDispatch } from "../../store/store";
 import { closeSidebar } from "../../store/slices/LayoutSlice";
+import { DashboardHabits } from "./DashboardHabits";
+import { useGetMeQuery } from "../../store/api/MeApiSlice";
 
 export const Dashboard = () => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useGetMeQuery } from "@/dashboardApp/store/api/MeApiSlice";
+import { useGetMeQuery } from "../store/api/MeApiSlice";
 import { FiHome, FiSettings, FiLogOut } from "react-icons/fi";
 import { useAppDispatch } from "../store/store";
 import { closeSidebar } from "../store/slices/LayoutSlice";

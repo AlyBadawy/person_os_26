@@ -1,27 +1,42 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import { Dashboard } from "../Dashboard";
+import { Dashboard } from "../Components/dashboard/Dashboard";
 
-test("renders header and counter works", async () => {
-  const user = userEvent.setup();
+// Mock subcomponents used by Dashboard so this test focuses on main layout
+jest.mock("../Components/dashboard/DashboardCalendar", () => ({
+  DashboardCalendar: () => <div data-testid="calendar">Calendar</div>,
+}));
+jest.mock("../Components/dashboard/DashboardHealth", () => ({
+  DashboardHealth: () => <div data-testid="health">Health</div>,
+}));
+jest.mock("../Components/dashboard/DashboardHabits", () => ({
+  DashboardHabits: () => <div data-testid="habits">Habits</div>,
+}));
+
+// Mock API hook that provides current user
+jest.mock("../store/api/MeApiSlice", () => ({
+  useGetMeQuery: () => ({ data: { me: { email: "alice@example.com" } } }),
+}));
+
+// Mock store hooks used in the component
+jest.mock("../store/store", () => ({
+  useAppDispatch: () => jest.fn(),
+}));
+
+test("renders dashboard header and main widgets", async () => {
   render(<Dashboard />);
 
-  expect(screen.getByText(/Welcome to Your Dashboard/i)).toBeInTheDocument();
+  // greeting should include the mocked user email
+  expect(screen.getByText(/alice@example.com/i)).toBeInTheDocument();
 
-  const plus = screen.getByRole("button", { name: "+" });
-  const minus = screen.getByRole("button", { name: "-" });
-  const reset = screen.getByRole("button", { name: /Reset/i });
+  // Quick Add button present
+  expect(
+    screen.getByRole("button", { name: /Quick Add/i })
+  ).toBeInTheDocument();
 
-  // initial count
-  expect(screen.getByText("0")).toBeInTheDocument();
-
-  await user.click(plus);
-  expect(screen.getByText("1")).toBeInTheDocument();
-
-  await user.click(minus);
-  expect(screen.getByText("0")).toBeInTheDocument();
-
-  await user.click(reset);
-  expect(screen.getByText("0")).toBeInTheDocument();
+  // mocked sub-widgets render
+  expect(screen.getByTestId("calendar")).toBeInTheDocument();
+  expect(screen.getByTestId("health")).toBeInTheDocument();
+  expect(screen.getByTestId("habits")).toBeInTheDocument();
 });
