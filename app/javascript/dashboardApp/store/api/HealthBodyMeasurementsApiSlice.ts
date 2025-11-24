@@ -18,7 +18,7 @@ export interface BodyMeasurement {
   updatedAt: Date;
 }
 
-export const bodyMeasurementsApiSlice = apiSlice.injectEndpoints({
+export const healthBodyMeasurementsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBodyMeasurements: builder.query<BodyMeasurement[], void>({
       query: () => "/health/body_measurements",
@@ -35,8 +35,33 @@ export const bodyMeasurementsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["bodyMeasurements"],
     }),
+    updateBodyMeasurement: builder.mutation<
+      BodyMeasurement,
+      { id: number; payload: BodyMeasurementPayload }
+    >({
+      query: ({ id, payload }) => ({
+        url: `/health/body_measurements/${id}`,
+        method: "PUT",
+        body: { measurement: payload },
+      }),
+      invalidatesTags: ["bodyMeasurements"],
+    }),
+    deleteBodyMeasurement: builder.mutation<
+      { success: boolean; id: number },
+      number
+    >({
+      query: (id) => ({
+        url: `/health/body_measurements/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["bodyMeasurements"],
+    }),
   }),
 });
 
-export const { useGetBodyMeasurementsQuery, useAddBodyMeasurementMutation } =
-  bodyMeasurementsApiSlice;
+export const {
+  useGetBodyMeasurementsQuery,
+  useAddBodyMeasurementMutation,
+  useUpdateBodyMeasurementMutation,
+  useDeleteBodyMeasurementMutation,
+} = healthBodyMeasurementsApiSlice;

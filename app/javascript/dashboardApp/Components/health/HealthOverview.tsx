@@ -1,7 +1,7 @@
 import React from "react";
 import { DashboardHealth } from "../dashboard/DashboardHealth";
 
-export const HealthOverview: React.FC = () => {
+export const HealthOverview = () => {
   return (
     <div>
       <DashboardHealth />

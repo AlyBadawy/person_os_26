@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_17_024857) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_24_142818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -23,6 +23,15 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_17_024857) do
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
     t.index ["user_id"], name: "index_health_body_measurements_on_user_id"
+  end
+
+  create_table "health_hearts", id: :uuid, default: -> { "uuidv7()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.jsonb "data"
+    t.string "measured_at"
+    t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
+    t.index ["user_id"], name: "index_health_hearts_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "uuidv7()" }, force: :cascade do |t|
@@ -52,4 +61,5 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_17_024857) do
   end
 
   add_foreign_key "health_body_measurements", "users"
+  add_foreign_key "health_hearts", "users"
 end

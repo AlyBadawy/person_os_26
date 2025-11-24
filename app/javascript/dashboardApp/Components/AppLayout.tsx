@@ -5,7 +5,7 @@ import { FiHome, FiSettings, FiLogOut } from "react-icons/fi";
 import { useAppDispatch } from "../store/store";
 import { closeSidebar } from "../store/slices/LayoutSlice";
 
-export const AppLayout: React.FC = () => {
+export const AppLayout = () => {
   const dispatch = useAppDispatch();
   const { data: userData } = useGetMeQuery();
 
@@ -80,5 +80,3 @@ export const AppLayout: React.FC = () => {
     </div>
   );
 };
-
-export default AppLayout;

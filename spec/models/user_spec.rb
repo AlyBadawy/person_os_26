@@ -75,5 +75,7 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it { is_expected.to have_many(:health_body_measurements).class_name('Health::BodyMeasurement').dependent(:destroy) }
+
+    it { is_expected.to have_many(:health_hearts).class_name('Health::Heart').dependent(:destroy) }
   end
 end

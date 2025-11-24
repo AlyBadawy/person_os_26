@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
 
-export const HealthLayout: React.FC = () => {
+export const HealthLayout = () => {
   return (
     <div className="min-h-screen bg-linear-to-br from-sky-50 to-indigo-50 p-6">
       <div className="mx-auto">

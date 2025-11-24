@@ -1,4 +1,4 @@
-import { BodyMeasurement } from "../store/api/BodyMeasurementsApiSlice";
+import { BodyMeasurement } from "../store/api/HealthBodyMeasurementsApiSlice";
 import { WeightUnitEnum } from "../types/WeightUnits";
 
 export function getWeightValueForUnit(

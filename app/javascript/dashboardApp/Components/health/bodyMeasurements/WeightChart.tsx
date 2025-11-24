@@ -1,4 +1,4 @@
-import { BodyMeasurement } from "@/dashboardApp/store/api/BodyMeasurementsApiSlice";
+import { BodyMeasurement } from "@/dashboardApp/store/api/HealthBodyMeasurementsApiSlice";
 import { useAppSelector } from "@/dashboardApp/store/store";
 import {
   CartesianGrid,

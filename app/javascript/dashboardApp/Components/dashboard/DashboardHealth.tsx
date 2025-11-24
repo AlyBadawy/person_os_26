@@ -1,4 +1,4 @@
-import { useGetBodyMeasurementsQuery } from "../../store/api/BodyMeasurementsApiSlice";
+import { useGetBodyMeasurementsQuery } from "../../store/api/HealthBodyMeasurementsApiSlice";
 import { Link } from "react-router-dom";
 
 export const DashboardHealth = () => {
