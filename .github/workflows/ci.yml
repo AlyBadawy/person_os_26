@@ -68,7 +68,7 @@ jobs:
         with:
           bundler-cache: true
       - name: Set up Node.js (cache yarn)
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "20"
           cache: "yarn"
@@ -90,7 +90,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Set up Node.js (cache yarn)
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "20"
           cache: "yarn"
@@ -105,7 +105,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Set up Node.js (cache yarn)
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "20"
           cache: "yarn"
@@ -120,7 +120,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Set up Node.js (cache yarn)
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "20"
           cache: "yarn"
