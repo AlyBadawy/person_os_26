@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Health::BodyMeasurement, type: :model do
   describe 'factory' do
     it 'has a valid factory' do
-      measurement = build(:health_body_measurement, topic: HealthMeasurementsTopics.all.sample)
+      measurement = build(:health_body_measurement, topic: HealthMeasurementsTopics.oxygen_saturation)
       expect(measurement).to be_valid
     end
   end

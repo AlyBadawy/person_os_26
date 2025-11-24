@@ -4,7 +4,7 @@ class Health::HeartService
   end
 
   def record_heart_data(bpm, systolic, diastolic, measured_at = Time.current)
-    @user.health_heart_measurements.create!(
+    @user.health_hearts.create!(
       measured_at: measured_at,
       data: {
       bpm: bpm,
@@ -15,14 +15,14 @@ class Health::HeartService
   end
 
   def get_heart_measurements(start_date: nil, end_date: nil)
-    measurements = @user.health_heart_measurements
+    measurements = @user.health_hearts
     measurements = measurements.where(measured_at: start_date.beginning_of_day..) if start_date.present?
     measurements = measurements.where(measured_at: ..end_date.end_of_day) if end_date.present?
     measurements.order(measured_at: :desc)
   end
 
   def get_heart_measurement_by_id(id)
-    @user.health_heart_measurements.find(id)
+    @user.health_hearts.find(id)
   end
 
   def update_heart_measurement_by_id(id, bpm: nil, systolic: nil, diastolic: nil, measured_at: nil)

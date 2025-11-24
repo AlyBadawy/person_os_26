@@ -28,7 +28,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_24_142818) do
   create_table "health_hearts", id: :uuid, default: -> { "uuidv7()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.jsonb "data"
-    t.string "measured_at"
+    t.datetime "measured_at"
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
     t.index ["user_id"], name: "index_health_hearts_on_user_id"
