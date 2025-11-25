@@ -13,7 +13,8 @@ Rails.application.routes.draw do
       get "me", to: "me#show"
 
       namespace :health do
-        resources :body_measurements, only: [:index, :create, :update, :destroy, :show]
+        resources :body_measurements, only: [:index, :show, :create, :update, :destroy]
+        resources :heart_measurements, only: [:index, :show, :create, :update, :destroy]
       end
     end
 
