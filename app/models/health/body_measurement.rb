@@ -14,7 +14,7 @@ class Health::BodyMeasurement < ApplicationRecord
       {
         original_unit: data["original_unit"],
         original_value: data["original_value"],
-        value_in_grams: data["value_in_grams"].round(2),
+        value_in_grams: WeightConverter.convert_value(data["value_in_grams"], data["original_unit"], WeightUnits.grams).round(2),
         value_in_kilograms: WeightConverter.convert_value(data["original_value"], data["original_unit"], WeightUnits.kilograms),
         value_in_pounds: WeightConverter.convert_value(data["original_value"], data["original_unit"], WeightUnits.pounds),
         value_in_stones: WeightConverter.convert_value(data["original_value"], data["original_unit"], WeightUnits.stones),
@@ -61,6 +61,12 @@ class Health::BodyMeasurement < ApplicationRecord
   def validate_weight_data
     unless data.is_a?(Hash) && data["value_in_grams"].is_a?(Numeric) && data["value_in_grams"] > 0
       errors.add(:data, "must include 'value_in_grams' as a positive numeric field for weight measurements")
+    end
+    unless data.is_a?(Hash) && data["original_unit"].is_a?(String) && WeightUnits.all.include?(data["original_unit"])
+      errors.add(:data, "must include 'original_unit' as a non-empty string for weight measurements")
+    end
+    unless data.is_a?(Hash) && data["original_value"].is_a?(Numeric) && data["original_value"] > 0
+      errors.add(:data, "must include 'original_value' as a positive numeric field for weight measurements")
     end
   end
 

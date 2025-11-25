@@ -53,4 +53,24 @@ RSpec.describe Health::BodyMeasurement, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
   end
+
+  describe '#converted_data' do
+    it 'returns weight in kilograms when stored in grams' do
+      measurement = create(
+        :health_body_measurement,
+        topic: HealthMeasurementsTopics.weight,
+        data: { original_unit: "grams", original_value: 5000, value_in_grams: 5000 } # 5 kg
+      )
+      expect(measurement.converted_data).to include(value_in_kilograms: 5.0)
+    end
+
+    it 'returns data unchanged for non-weight measurements' do
+      measurement = create(
+        :health_body_measurement,
+        topic: HealthMeasurementsTopics.temperature,
+        data: { "value" => 75 }
+      )
+      expect(measurement.converted_data).to eq({ "value" => 75 })
+    end
+  end
 end

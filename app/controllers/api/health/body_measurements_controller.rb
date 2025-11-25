@@ -45,9 +45,9 @@ class Api::Health::BodyMeasurementsController < ApplicationController
     begin
       topic = params[:topic] || params.dig(:measurement, :topic)
       value = params[:value] || params.dig(:measurement, :value)
-      value = coerce_numeric(value)
+      value = ApplicationHelper.coerce_numeric(value)
       unit = params[:unit] || params.dig(:measurement, :unit)
-      measured_at = parse_time_param(params[:measured_at] || params.dig(:measurement, :measured_at))
+      measured_at = ApplicationHelper.parse_time_param(params[:measured_at] || params.dig(:measurement, :measured_at))
 
       @measurement = service.record_body_measurement(topic, value, unit, measured_at)
       render :show, status: :created
@@ -64,18 +64,20 @@ class Api::Health::BodyMeasurementsController < ApplicationController
     begin
       @measurement = service.get_body_measurement_by_id(params[:id])
 
-      topic = params[:topic] || params.dig(:measurement, :topic)
-      value = params[:value] || params.dig(:measurement, :value)
-      value = coerce_numeric(value)
-      unit = params[:unit] || params.dig(:measurement, :unit)
-      measured_at = parse_time_param(params[:measured_at] || params.dig(:measurement, :measured_at))
+      topic = params[:topic] || params.dig(:data, :topic)
+      value = params[:value] || params.dig(:data, :value)
+      value = ApplicationHelper.coerce_numeric(value)
+      unit = params[:unit] || params.dig(:data, :unit)
+      measured_at = ApplicationHelper.parse_time_param(params[:measured_at] || params.dig(:data, :measured_at))
 
       @measurement = service.update_body_measurement_by_id(@measurement.id, topic: topic, value: value, unit: unit, measured_at: measured_at)
       render :show
     rescue ActiveRecord::RecordNotFound
       head :not_found
-    rescue ActiveRecord::RecordInvalid => e
+    rescue  ActiveRecord::RecordInvalid => e
       render json: { error: e.record.errors.full_messages }, status: :unprocessable_content
+    rescue ArgumentError => e
+      render json: { error: e.message }, status: :unprocessable_content
     end
   end
 
@@ -88,29 +90,6 @@ class Api::Health::BodyMeasurementsController < ApplicationController
       head :no_content
     rescue ActiveRecord::RecordNotFound
       head :not_found
-    end
-  end
-
-  private
-
-  def parse_time_param(val)
-    return nil if val.blank?
-
-    begin
-      Time.zone.parse(val)
-    rescue ArgumentError, TypeError
-      nil
-    end
-  end
-
-  def coerce_numeric(val)
-    return nil if val.blank?
-
-    str = val.to_s
-    begin
-      Float(str)
-    rescue ArgumentError, TypeError
-      raise ArgumentError, "Value must be numeric"
     end
   end
 end
