@@ -10,7 +10,7 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
       before do
         svc = Health::BodyMeasurementsService.new(user)
         svc.record_body_measurement(HealthMeasurementsTopics.weight, 1.0, WeightUnits.kilograms, 3.days.ago)
-        svc.record_body_measurement(HealthMeasurementsTopics.heart_rate, 70, nil, 2.days.ago)
+        svc.record_body_measurement(HealthMeasurementsTopics.height, 70, nil, 2.days.ago)
       end
 
       it 'returns measurements for the current user as JSON array' do
@@ -28,7 +28,7 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
       before do
         svc = Health::BodyMeasurementsService.new(user)
         svc.record_body_measurement(HealthMeasurementsTopics.weight, 2.0, WeightUnits.kilograms)
-        svc.record_body_measurement(HealthMeasurementsTopics.heart_rate, 65)
+        svc.record_body_measurement(HealthMeasurementsTopics.height, 65)
       end
 
       it 'returns only measurements for given topic' do
@@ -169,7 +169,7 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
   describe 'DELETE /api/health/body_measurements/:id' do
     let(:measurement) do
       svc = Health::BodyMeasurementsService.new(user)
-      svc.record_body_measurement(HealthMeasurementsTopics.heart_rate, 60)
+      svc.record_body_measurement(HealthMeasurementsTopics.height, 60)
     end
 
     it 'deletes the measurement' do

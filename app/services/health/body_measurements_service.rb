@@ -59,8 +59,8 @@ module Health
       case topic
       when HealthMeasurementsTopics::WEIGHT
         normalize_weight(value, unit)
-      when HealthMeasurementsTopics::HEART_RATE
-        normalize_heart_rate(value)
+      when HealthMeasurementsTopics::HEIGHT
+        { original_value: value, original_unit: unit } # Placeholder for height normalization
       else
         raise ArgumentError, "Normalization not implemented for topic: #{topic}"
       end
@@ -79,13 +79,6 @@ module Health
         original_value: value,
         value_in_grams: normalized_value,
       }
-    end
-
-    def normalize_heart_rate(value)
-      unless value.is_a?(Numeric)
-        raise ArgumentError, "Heart rate value must be numeric"
-      end
-      { value: value }
     end
   end
 end

@@ -19,11 +19,6 @@ class Health::BodyMeasurement < ApplicationRecord
         value_in_pounds: WeightConverter.convert_value(data["original_value"], data["original_unit"], WeightUnits.pounds),
         value_in_stones: WeightConverter.convert_value(data["original_value"], data["original_unit"], WeightUnits.stones),
       }
-    when HealthMeasurementsTopics::HEART_RATE
-      {
-        value: data["value"],
-        unit: "bpm",
-      }
     else
       data
     end
@@ -51,8 +46,6 @@ class Health::BodyMeasurement < ApplicationRecord
     case topic
     when HealthMeasurementsTopics::WEIGHT
       validate_weight_data
-    when HealthMeasurementsTopics::HEART_RATE
-      validate_heart_rate_data
     else
       # No additional validations for other topics yet
     end
@@ -67,12 +60,6 @@ class Health::BodyMeasurement < ApplicationRecord
     end
     unless data.is_a?(Hash) && data["original_value"].is_a?(Numeric) && data["original_value"] > 0
       errors.add(:data, "must include 'original_value' as a positive numeric field for weight measurements")
-    end
-  end
-
-  def validate_heart_rate_data
-    unless data.is_a?(Hash) && data["value"].is_a?(Numeric) && data["value"] > 0
-      errors.add(:data, "must include 'value' as a positive numeric field for heart rate measurements")
     end
   end
 end

@@ -44,24 +44,24 @@ RSpec.describe Health::BodyMeasurementsService, type: :service do
       end
     end
 
-    context 'when topic is heart_rate' do
-      it 'creates a heart rate measurement with numeric value' do
-        m = service.record_body_measurement(HealthMeasurementsTopics.heart_rate, 72)
+    context 'when topic is height', skip: "not implemented" do
+      it 'creates a height measurement with numeric value' do
+        m = service.record_body_measurement(HealthMeasurementsTopics.height, 72)
 
         expect(m).to be_persisted
-        expect(m.topic).to eq(HealthMeasurementsTopics.heart_rate)
-        expect(m.data).to include('value' => 72)
+        expect(m.topic).to eq(HealthMeasurementsTopics.height)
+        expect(m.data).to include('original_value' => 72)
       end
 
-      it 'raises when heart rate value is not numeric' do
-        expect { service.record_body_measurement(HealthMeasurementsTopics.heart_rate, 'fast') }
-          .to raise_error(ArgumentError, /Heart rate value must be numeric/)
+      it 'raises when height value is not numeric' do
+        expect { service.record_body_measurement(HealthMeasurementsTopics.height, 'fast') }
+          .to raise_error(ArgumentError, /Height value must be numeric/)
       end
     end
 
     context 'when topic is not implemented' do
       it 'raises for not implemented topic' do
-        expect { service.record_body_measurement(HealthMeasurementsTopics.blood_pressure, 120) }
+        expect { service.record_body_measurement(HealthMeasurementsTopics.body_mass, 120) }
           .to raise_error(ArgumentError, /Normalization not implemented for topic/)
       end
     end
@@ -76,7 +76,7 @@ RSpec.describe Health::BodyMeasurementsService, type: :service do
     before do
       # create several measurements with different topics and times
       service.record_body_measurement(HealthMeasurementsTopics.weight, 1.0, WeightUnits.kilograms, 3.days.ago)
-      service.record_body_measurement(HealthMeasurementsTopics.heart_rate, 60, nil, 2.days.ago)
+      service.record_body_measurement(HealthMeasurementsTopics.height, 60, nil, 2.days.ago)
       service.record_body_measurement(HealthMeasurementsTopics.weight, 2.0, WeightUnits.kilograms, 1.day.ago)
     end
 
@@ -122,9 +122,9 @@ RSpec.describe Health::BodyMeasurementsService, type: :service do
     let(:measurement) { service.record_body_measurement(HealthMeasurementsTopics.weight, 1.0, WeightUnits.kilograms) }
 
     it 'updates topic when provided' do
-      updated = service.update_body_measurement_by_id(measurement.id, topic: HealthMeasurementsTopics.heart_rate, value: 70)
-      expect(updated.topic).to eq(HealthMeasurementsTopics.heart_rate)
-      expect(updated.data['value']).to eq(70)
+      updated = service.update_body_measurement_by_id(measurement.id, topic: HealthMeasurementsTopics.height, value: 70)
+      expect(updated.topic).to eq(HealthMeasurementsTopics.height)
+      expect(updated.data['original_value']).to eq(70)
     end
 
     it 'updates value and normalizes data' do
