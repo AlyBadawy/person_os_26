@@ -10,7 +10,7 @@ class Health::BodyMeasurement < ApplicationRecord
 
   def converted_data
     case topic
-    when HealthMeasurementsTopics::WEIGHT
+    when BodyMeasurementsTopics::WEIGHT
       {
         original_unit: data["original_unit"],
         original_value: data["original_value"],
@@ -37,14 +37,14 @@ class Health::BodyMeasurement < ApplicationRecord
   def topic_must_be_valid
     return if topic.blank? # handled by presence validation
 
-    unless HealthMeasurementsTopics.all.include?(topic)
+    unless BodyMeasurementsTopics.all.include?(topic)
       errors.add(:topic, "must be a valid topic")
     end
   end
 
   def body_measurement_data_validations
     case topic
-    when HealthMeasurementsTopics::WEIGHT
+    when BodyMeasurementsTopics::WEIGHT
       validate_weight_data
     else
       # No additional validations for other topics yet

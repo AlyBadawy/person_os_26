@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe Health::BodyMeasurement, type: :model do
   describe 'factory' do
     it 'has a valid factory' do
-      measurement = build(:health_body_measurement, topic: HealthMeasurementsTopics.height)
+      measurement = build(:health_body_measurement, topic: BodyMeasurementsTopics.height)
       expect(measurement).to be_valid
     end
   end
 
   describe 'validations' do
     it 'validates presence of data' do
-      measurement = build(:health_body_measurement, data: nil, topic: HealthMeasurementsTopics.all.sample)
+      measurement = build(:health_body_measurement, data: nil, topic: BodyMeasurementsTopics.all.sample)
       expect(measurement).not_to be_valid
       expect(measurement.errors[:data]).to include("can't be blank")
     end
@@ -22,7 +22,7 @@ RSpec.describe Health::BodyMeasurement, type: :model do
     end
 
     it 'validates data is valid JSON object' do
-      measurement = build(:health_body_measurement, data: 'not-a-json', topic: HealthMeasurementsTopics.all.sample)
+      measurement = build(:health_body_measurement, data: 'not-a-json', topic: BodyMeasurementsTopics.all.sample)
       expect(measurement).not_to be_valid
       expect(measurement.errors[:data]).to include("must be a valid JSON object")
     end
@@ -35,7 +35,7 @@ RSpec.describe Health::BodyMeasurement, type: :model do
 
     context 'when weight measurements' do
       it 'validates weight data structure' do
-        measurement = build(:health_body_measurement, topic: HealthMeasurementsTopics.weight, data: { "wrong_key" => 123 })
+        measurement = build(:health_body_measurement, topic: BodyMeasurementsTopics.weight, data: { "wrong_key" => 123 })
         expect(measurement).not_to be_valid
         expect(measurement.errors[:data]).to include("must include 'value_in_grams' as a positive numeric field for weight measurements")
       end
@@ -43,7 +43,7 @@ RSpec.describe Health::BodyMeasurement, type: :model do
 
     context 'when height measurements', skip: "Not implemented yet" do
       it 'validates heart rate data structure' do
-        measurement = build(:health_body_measurement, topic: HealthMeasurementsTopics.height, data: { "wrong_key" => 80 })
+        measurement = build(:health_body_measurement, topic: BodyMeasurementsTopics.height, data: { "wrong_key" => 80 })
         expect(measurement).not_to be_valid
         expect(measurement.errors[:data]).to include("must include 'value' as a positive numeric field for heart rate measurements")
       end
@@ -58,7 +58,7 @@ RSpec.describe Health::BodyMeasurement, type: :model do
     it 'returns weight in kilograms when stored in grams' do
       measurement = create(
         :health_body_measurement,
-        topic: HealthMeasurementsTopics.weight,
+        topic: BodyMeasurementsTopics.weight,
         data: { original_unit: "grams", original_value: 5000, value_in_grams: 5000 } # 5 kg
       )
       expect(measurement.converted_data).to include(value_in_kilograms: 5.0)
@@ -67,7 +67,7 @@ RSpec.describe Health::BodyMeasurement, type: :model do
     it 'returns data unchanged for non-weight measurements' do
       measurement = create(
         :health_body_measurement,
-        topic: HealthMeasurementsTopics.height,
+        topic: BodyMeasurementsTopics.height,
         data: { "value" => 75 }
       )
       expect(measurement.converted_data).to eq({ "value" => 75 })

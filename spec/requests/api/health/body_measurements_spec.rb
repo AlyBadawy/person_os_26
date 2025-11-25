@@ -9,8 +9,8 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
     context 'without filters' do
       before do
         svc = Health::BodyMeasurementsService.new(user)
-        svc.record_body_measurement(HealthMeasurementsTopics.weight, 1.0, WeightUnits.kilograms, 3.days.ago)
-        svc.record_body_measurement(HealthMeasurementsTopics.height, 70, nil, 2.days.ago)
+        svc.record_body_measurement(BodyMeasurementsTopics.weight, 1.0, WeightUnits.kilograms, 3.days.ago)
+        svc.record_body_measurement(BodyMeasurementsTopics.height, 70, nil, 2.days.ago)
       end
 
       it 'returns measurements for the current user as JSON array' do
@@ -27,16 +27,16 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
     context 'with topic filter' do
       before do
         svc = Health::BodyMeasurementsService.new(user)
-        svc.record_body_measurement(HealthMeasurementsTopics.weight, 2.0, WeightUnits.kilograms)
-        svc.record_body_measurement(HealthMeasurementsTopics.height, 65)
+        svc.record_body_measurement(BodyMeasurementsTopics.weight, 2.0, WeightUnits.kilograms)
+        svc.record_body_measurement(BodyMeasurementsTopics.height, 65)
       end
 
       it 'returns only measurements for given topic' do
-        get '/api/health/body_measurements', params: { topic: HealthMeasurementsTopics.weight }
+        get '/api/health/body_measurements', params: { topic: BodyMeasurementsTopics.weight }
 
         expect(response).to have_http_status(:ok)
         body = JSON.parse(response.body)
-        expect(body).to all(include('topic' => HealthMeasurementsTopics.weight))
+        expect(body).to all(include('topic' => BodyMeasurementsTopics.weight))
       end
     end
 
@@ -53,9 +53,9 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
     context 'with date range filters' do
       before do
         svc = Health::BodyMeasurementsService.new(user)
-        svc.record_body_measurement(HealthMeasurementsTopics.weight, 1.0, WeightUnits.kilograms, 5.days.ago)
-        svc.record_body_measurement(HealthMeasurementsTopics.weight, 2.0, WeightUnits.kilograms, 3.days.ago)
-        svc.record_body_measurement(HealthMeasurementsTopics.weight, 3.0, WeightUnits.kilograms, 1.day.ago)
+        svc.record_body_measurement(BodyMeasurementsTopics.weight, 1.0, WeightUnits.kilograms, 5.days.ago)
+        svc.record_body_measurement(BodyMeasurementsTopics.weight, 2.0, WeightUnits.kilograms, 3.days.ago)
+        svc.record_body_measurement(BodyMeasurementsTopics.weight, 3.0, WeightUnits.kilograms, 1.day.ago)
       end
 
       it 'returns only measurements within the date range' do
@@ -83,7 +83,7 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
   describe 'GET /api/health/body_measurements/:id' do
     let(:measurement) do
       svc = Health::BodyMeasurementsService.new(user)
-      svc.record_body_measurement(HealthMeasurementsTopics.weight, 1.0, WeightUnits.kilograms)
+      svc.record_body_measurement(BodyMeasurementsTopics.weight, 1.0, WeightUnits.kilograms)
     end
 
     it 'returns the specific measurement as JSON' do
@@ -97,14 +97,14 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
 
   describe 'POST /api/health/body_measurements' do
     it 'creates a weight measurement' do
-      params = { topic: HealthMeasurementsTopics.weight, value: 2.5, unit: WeightUnits.kilograms }
+      params = { topic: BodyMeasurementsTopics.weight, value: 2.5, unit: WeightUnits.kilograms }
 
       post '/api/health/body_measurements', params: params
 
       expect(response).to have_http_status(:created)
       body = JSON.parse(response.body)
       expect(body).to include('id', 'topic', 'data')
-      expect(body['topic']).to eq(HealthMeasurementsTopics.weight)
+      expect(body['topic']).to eq(BodyMeasurementsTopics.weight)
       expect(body['data']).to include('valueInGrams')
     end
 
@@ -117,7 +117,7 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
     end
 
     it 'returns 422 for invalid data' do
-      post '/api/health/body_measurements', params: { topic: HealthMeasurementsTopics.weight, value: 'not_a_number', unit: WeightUnits.kilograms }
+      post '/api/health/body_measurements', params: { topic: BodyMeasurementsTopics.weight, value: 'not_a_number', unit: WeightUnits.kilograms }
 
       expect(response).to have_http_status(:unprocessable_content)
       body = JSON.parse(response.body)
@@ -125,7 +125,7 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
     end
 
     it 'rescues from record invalid error' do
-      post '/api/health/body_measurements', params: { topic: HealthMeasurementsTopics.weight, value: -5, unit: WeightUnits.kilograms }
+      post '/api/health/body_measurements', params: { topic: BodyMeasurementsTopics.weight, value: -5, unit: WeightUnits.kilograms }
 
       expect(response).to have_http_status(:unprocessable_content)
       body = JSON.parse(response.body)
@@ -136,7 +136,7 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
   describe 'PATCH /api/health/body_measurements/:id' do
     let(:measurement) do
       svc = Health::BodyMeasurementsService.new(user)
-      svc.record_body_measurement(HealthMeasurementsTopics.weight, 1.0, WeightUnits.kilograms)
+      svc.record_body_measurement(BodyMeasurementsTopics.weight, 1.0, WeightUnits.kilograms)
     end
 
     it 'updates measured_at and data' do
@@ -158,7 +158,7 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
     end
 
     it 'returns 422 for invalid data' do
-      patch "/api/health/body_measurements/#{measurement.id}", params: { topic: HealthMeasurementsTopics.weight, value: 'not_a_number', unit: WeightUnits.kilograms }
+      patch "/api/health/body_measurements/#{measurement.id}", params: { topic: BodyMeasurementsTopics.weight, value: 'not_a_number', unit: WeightUnits.kilograms }
 
       expect(response).to have_http_status(:unprocessable_content)
       body = JSON.parse(response.body)
@@ -169,7 +169,7 @@ RSpec.describe "Api::Health::BodyMeasurements", type: :request do
   describe 'DELETE /api/health/body_measurements/:id' do
     let(:measurement) do
       svc = Health::BodyMeasurementsService.new(user)
-      svc.record_body_measurement(HealthMeasurementsTopics.height, 60)
+      svc.record_body_measurement(BodyMeasurementsTopics.height, 60)
     end
 
     it 'deletes the measurement' do

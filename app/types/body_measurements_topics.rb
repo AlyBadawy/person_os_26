@@ -1,4 +1,4 @@
-module HealthMeasurementsTopics
+module BodyMeasurementsTopics
   WEIGHT = "weight"
   BODY_MASS = "body_mass"
   HEIGHT = "height"

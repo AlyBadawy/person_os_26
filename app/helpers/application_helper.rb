@@ -33,4 +33,19 @@ module ApplicationHelper
       raise ArgumentError, "Value must be numeric"
     end
   end
+
+  def coerce_numeric_or_nil(val)
+    # If already a numeric type, return it unchanged
+    return val if val.is_a?(Numeric)
+
+    # Blank or nil values return nil
+    return nil if val.nil? || val.to_s.strip.empty?
+
+    str = val.to_s
+    begin
+      Float(str)
+    rescue ArgumentError, TypeError
+      raise ArgumentError, "Value must be numeric"
+    end
+  end
 end

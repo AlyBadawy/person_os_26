@@ -20,10 +20,10 @@ RSpec.describe Health::BodyMeasurementsService, type: :service do
   describe '#record_body_measurement' do
     context 'when topic is weight' do
       it 'creates a measurement with normalized weight data' do
-        result = service.record_body_measurement(HealthMeasurementsTopics.weight, 2.5, WeightUnits.kilograms)
+        result = service.record_body_measurement(BodyMeasurementsTopics.weight, 2.5, WeightUnits.kilograms)
 
         expect(result).to be_persisted
-        expect(result.topic).to eq(HealthMeasurementsTopics.weight)
+        expect(result.topic).to eq(BodyMeasurementsTopics.weight)
         expect(result.data).to include(
           'original_unit' => WeightUnits.kilograms,
           'original_value' => 2.5
@@ -33,35 +33,35 @@ RSpec.describe Health::BodyMeasurementsService, type: :service do
 
       it 'raises when value is not numeric' do
         expect {
-          service.record_body_measurement(HealthMeasurementsTopics.weight, 'not-a-number', WeightUnits.kilograms)
+          service.record_body_measurement(BodyMeasurementsTopics.weight, 'not-a-number', WeightUnits.kilograms)
         }.to raise_error(ArgumentError, /Weight value must be numeric/)
       end
 
       it 'raises when unit is invalid' do
         expect {
-          service.record_body_measurement(HealthMeasurementsTopics.weight, 100, 'invalid_unit')
+          service.record_body_measurement(BodyMeasurementsTopics.weight, 100, 'invalid_unit')
         }.to raise_error(ArgumentError, /Unit must be a valid WeightUnit/)
       end
     end
 
     context 'when topic is height', skip: "not implemented" do
       it 'creates a height measurement with numeric value' do
-        m = service.record_body_measurement(HealthMeasurementsTopics.height, 72)
+        m = service.record_body_measurement(BodyMeasurementsTopics.height, 72)
 
         expect(m).to be_persisted
-        expect(m.topic).to eq(HealthMeasurementsTopics.height)
+        expect(m.topic).to eq(BodyMeasurementsTopics.height)
         expect(m.data).to include('original_value' => 72)
       end
 
       it 'raises when height value is not numeric' do
-        expect { service.record_body_measurement(HealthMeasurementsTopics.height, 'fast') }
+        expect { service.record_body_measurement(BodyMeasurementsTopics.height, 'fast') }
           .to raise_error(ArgumentError, /Height value must be numeric/)
       end
     end
 
     context 'when topic is not implemented' do
       it 'raises for not implemented topic' do
-        expect { service.record_body_measurement(HealthMeasurementsTopics.body_mass, 120) }
+        expect { service.record_body_measurement(BodyMeasurementsTopics.body_mass, 120) }
           .to raise_error(ArgumentError, /Normalization not implemented for topic/)
       end
     end
@@ -75,9 +75,9 @@ RSpec.describe Health::BodyMeasurementsService, type: :service do
   describe '#get_body_measurements' do
     before do
       # create several measurements with different topics and times
-      service.record_body_measurement(HealthMeasurementsTopics.weight, 1.0, WeightUnits.kilograms, 3.days.ago)
-      service.record_body_measurement(HealthMeasurementsTopics.height, 60, nil, 2.days.ago)
-      service.record_body_measurement(HealthMeasurementsTopics.weight, 2.0, WeightUnits.kilograms, 1.day.ago)
+      service.record_body_measurement(BodyMeasurementsTopics.weight, 1.0, WeightUnits.kilograms, 3.days.ago)
+      service.record_body_measurement(BodyMeasurementsTopics.height, 60, nil, 2.days.ago)
+      service.record_body_measurement(BodyMeasurementsTopics.weight, 2.0, WeightUnits.kilograms, 1.day.ago)
     end
 
     it 'raises for invalid topic filter' do
@@ -86,9 +86,9 @@ RSpec.describe Health::BodyMeasurementsService, type: :service do
     end
 
     it 'returns measurements filtered by topic' do
-      results = service.get_body_measurements(topic: HealthMeasurementsTopics.weight)
+      results = service.get_body_measurements(topic: BodyMeasurementsTopics.weight)
       expect(results.count).to eq(2)
-      expect(results.pluck(:topic).uniq).to eq([HealthMeasurementsTopics.weight])
+      expect(results.pluck(:topic).uniq).to eq([BodyMeasurementsTopics.weight])
     end
 
     it 'returns measurements within date range' do
@@ -107,7 +107,7 @@ RSpec.describe Health::BodyMeasurementsService, type: :service do
 
   describe '#get_body_measurement_by_id' do
     it 'retrieves the correct measurement by ID' do
-      measurement = service.record_body_measurement(HealthMeasurementsTopics.weight, 1.5, WeightUnits.kilograms)
+      measurement = service.record_body_measurement(BodyMeasurementsTopics.weight, 1.5, WeightUnits.kilograms)
       fetched = service.get_body_measurement_by_id(measurement.id)
       expect(fetched).to eq(measurement)
     end
@@ -119,11 +119,11 @@ RSpec.describe Health::BodyMeasurementsService, type: :service do
   end
 
   describe '#update_body_measurement_by_id' do
-    let(:measurement) { service.record_body_measurement(HealthMeasurementsTopics.weight, 1.0, WeightUnits.kilograms) }
+    let(:measurement) { service.record_body_measurement(BodyMeasurementsTopics.weight, 1.0, WeightUnits.kilograms) }
 
     it 'updates topic when provided' do
-      updated = service.update_body_measurement_by_id(measurement.id, topic: HealthMeasurementsTopics.height, value: 70)
-      expect(updated.topic).to eq(HealthMeasurementsTopics.height)
+      updated = service.update_body_measurement_by_id(measurement.id, topic: BodyMeasurementsTopics.height, value: 70)
+      expect(updated.topic).to eq(BodyMeasurementsTopics.height)
       expect(updated.data['original_value']).to eq(70)
     end
 

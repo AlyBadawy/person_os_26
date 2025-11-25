@@ -69,10 +69,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'callbacks' do
-    skip 'add tests for any custom callbacks if present'
-  end
-
   describe 'associations' do
     it { is_expected.to have_many(:health_body_measurements).class_name('Health::BodyMeasurement').dependent(:destroy) }
 

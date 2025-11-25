@@ -15,7 +15,7 @@ module Health
     end
 
     def get_body_measurements(topic: nil, start_date: nil, end_date: nil)
-      if topic.present? && HealthMeasurementsTopics.all.exclude?(topic.to_s)
+      if topic.present? && BodyMeasurementsTopics.all.exclude?(topic.to_s)
         raise ArgumentError, "Invalid measurement topic: #{topic}"
       end
 
@@ -49,7 +49,7 @@ module Health
     private
 
     def validate_topic(topic)
-      allowed_topics = HealthMeasurementsTopics.all
+      allowed_topics = BodyMeasurementsTopics.all
       unless allowed_topics.include?(topic.to_s)
         raise ArgumentError, "Invalid measurement topic: #{topic}"
       end
@@ -57,9 +57,9 @@ module Health
 
     def normalize_body_measurement_data(topic, value, unit)
       case topic
-      when HealthMeasurementsTopics::WEIGHT
+      when BodyMeasurementsTopics::WEIGHT
         normalize_weight(value, unit)
-      when HealthMeasurementsTopics::HEIGHT
+      when BodyMeasurementsTopics::HEIGHT
         { original_value: value, original_unit: unit } # Placeholder for height normalization
       else
         raise ArgumentError, "Normalization not implemented for topic: #{topic}"

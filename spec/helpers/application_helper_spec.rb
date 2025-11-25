@@ -32,6 +32,24 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe '.coerce_numeric_or_nil' do
+    it 'converts numeric strings to float' do
+      expect(helper.coerce_numeric_or_nil('42')).to eq(42.0)
+      expect(helper.coerce_numeric_or_nil('3.14')).to eq(3.14)
+    end
+
+    it 'returns numeric values unchanged' do
+      expect(helper.coerce_numeric_or_nil(10)).to eq(10)
+      expect(helper.coerce_numeric_or_nil(2.71)).to eq(2.71)
+    end
+
+    it 'returns nil for blank or nil input' do
+      expect(helper.coerce_numeric_or_nil(nil)).to be_nil
+      expect(helper.coerce_numeric_or_nil('')).to be_nil
+      expect(helper.coerce_numeric_or_nil('   ')).to be_nil
+    end
+  end
+
   describe '.parse_time_param' do
     it 'parses valid datetime strings' do
       time_str = '2024-01-01T12:00:00Z'
