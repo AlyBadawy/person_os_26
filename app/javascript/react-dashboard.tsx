@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { DashboardApp } from "./dashboardApp/DashboardApp";
+import { Provider } from "react-redux";
+import { store } from "./dashboardApp/store/store";
 
 document.addEventListener("DOMContentLoaded", () => {
   const rootElement = document.getElementById("dashboard-root");
@@ -9,7 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const root = ReactDOM.createRoot(rootElement);
     root.render(
       <React.StrictMode>
-        <DashboardApp />
+        <Provider store={store}>
+          <DashboardApp />
+        </Provider>
       </React.StrictMode>
     );
   }

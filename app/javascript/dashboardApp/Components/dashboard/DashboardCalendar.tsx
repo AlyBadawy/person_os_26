@@ -2,7 +2,7 @@ import React from "react";
 
 export const DashboardCalendar = () => {
   return (
-    <section className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-md">
+    <section className="lg:col-span-2">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-slate-800">Calendar</h2>
         <div className="text-sm text-slate-500">Placeholder</div>

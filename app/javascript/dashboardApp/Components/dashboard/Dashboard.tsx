@@ -1,15 +1,12 @@
 import React from "react";
-import { FiClock, FiCheck } from "react-icons/fi";
-import { DashboardCalendar } from "./DashboardCalendar";
-import { DashboardHealth } from "./DashboardHealth";
-import { useAppDispatch } from "../../store/store";
 import { closeSidebar } from "../../store/slices/LayoutSlice";
+import { useAppDispatch } from "../../store/store";
+import { DashboardCalendar } from "./DashboardCalendar";
 import { DashboardHabits } from "./DashboardHabits";
-import { useGetMeQuery } from "../../store/api/MeApiSlice";
+import { DashboardHealth } from "./DashboardHealth";
 
 export const Dashboard = () => {
   const dispatch = useAppDispatch();
-  const { data: userData } = useGetMeQuery();
 
   // close modal on Escape
   React.useEffect(() => {
@@ -21,47 +18,51 @@ export const Dashboard = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-sky-50 to-indigo-50 p-6">
+    <div className="bg-linear-to-br from-sky-50 to-indigo-50 p-6">
       <div className="max-w-6xl mx-auto">
-        <header className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-                Hello, {userData?.me.email ? userData.me.email : "User"} —
-                welcome back!
-              </h1>
-              <p className="mt-1 text-slate-600">
-                Here&rsquo;s what is happening in your health hub today.
-              </p>
+        <main className="flex flex-col items-start gap-6">
+          {/* First row: Calendar + Habits (two columns on large screens, stacked on small) */}
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+            <div className="w-full h-full min-h-0">
+              <div className="h-full bg-white rounded-lg shadow-sm p-6 flex flex-col overflow-hidden">
+                <DashboardCalendar />
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              <button className="hidden sm:inline-flex items-center gap-2 bg-white text-slate-700 px-4 py-2 rounded-full shadow-sm hover:shadow-md transition">
-                <FiClock className="w-5 h-5 text-indigo-500" />
-                <span className="text-sm font-medium">Today</span>
-              </button>
-              <button className="inline-flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-full shadow hover:bg-indigo-700 transition">
-                <FiCheck className="w-5 h-5" />
-                <span className="text-sm font-semibold">Quick Add</span>
-              </button>
+            <div className="w-full h-full min-h-0">
+              <div className="h-full bg-white rounded-lg shadow-sm p-6 flex flex-col overflow-hidden">
+                <DashboardHabits />
+              </div>
             </div>
           </div>
-        </header>
 
-        <main className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Calendar - large left area on large screens */}
-          <DashboardCalendar />
-
-          {/* Right column - Health + Habits */}
-          <section className="space-y-6">
+          {/* Second row: Health (full width) */}
+          <div className="w-full">
             <DashboardHealth />
-            <DashboardHabits />
+          </div>
+
+          {/* Third row: Finance overview placeholder */}
+          <section className="w-full">
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h3 className="text-lg font-semibold text-slate-700">
+                Finance Overview
+              </h3>
+              <p className="mt-2 text-sm text-slate-500">
+                Placeholder for finance charts and summaries — coming soon.
+              </p>
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="h-24 bg-slate-50 rounded border border-slate-100 flex items-center justify-center text-sm text-slate-400">
+                  Net Worth
+                </div>
+                <div className="h-24 bg-slate-50 rounded border border-slate-100 flex items-center justify-center text-sm text-slate-400">
+                  Monthly Income
+                </div>
+                <div className="h-24 bg-slate-50 rounded border border-slate-100 flex items-center justify-center text-sm text-slate-400">
+                  Monthly Expenses
+                </div>
+              </div>
+            </div>
           </section>
         </main>
-
-        <footer className="mt-8 text-center text-slate-500 text-sm">
-          This is a minimal dashboard layout — placeholders can be replaced with
-          real widgets.
-        </footer>
       </div>
     </div>
   );

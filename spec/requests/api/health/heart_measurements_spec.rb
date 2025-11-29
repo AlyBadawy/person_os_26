@@ -123,12 +123,12 @@ RSpec.describe "Api::Health::HeartMeasurements", type: :request do
     end
 
     it 'returns 404 for unknown id' do
-      patch "/api/health/heart_measurements/#{SecureRandom.uuid}", params: { data: { foo: 'bar' } }
+      patch "/api/health/heart_measurements/#{SecureRandom.uuid}", params: { measurement: { foo: 'bar' } }
       expect(response).to have_http_status(:not_found)
     end
 
     it 'returns 422 for invalid data' do
-      patch "/api/health/heart_measurements/#{measurement.id}", params: { data: { bpm: 'not_a_number' } }
+      patch "/api/health/heart_measurements/#{measurement.id}", params: { measurement: { bpm: 'not_a_number' } }
 
       expect(response).to have_http_status(:unprocessable_content)
       body = JSON.parse(response.body)

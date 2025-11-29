@@ -2,7 +2,7 @@ import React from "react";
 
 export const DashboardHabits = () => {
   return (
-    <div className="bg-white rounded-2xl p-5 shadow-md">
+    <section className="lg:col-span-2">
       <div className="flex items-start justify-between">
         <div>
           <h3 className="text-lg font-semibold text-slate-800">Habits</h3>
@@ -24,6 +24,6 @@ export const DashboardHabits = () => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };

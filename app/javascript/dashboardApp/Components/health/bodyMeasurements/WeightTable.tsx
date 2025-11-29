@@ -87,9 +87,9 @@ export const WeightTable = ({
       <table className="w-full text-sm">
         <thead>
           <tr className="text-left text-slate-500">
-            <th className="pb-3 sticky top-0 bg-white z-10">Date / Time</th>
-            <th className="pb-3 sticky top-0 bg-white z-10">Value</th>
-            <th className="pb-3 sticky top-0 bg-white z-10">✍🏻</th>
+            <th className="pb-3">Date / Time</th>
+            <th className="pb-3">Value</th>
+            <th className="pb-3">Actions</th>
           </tr>
         </thead>
 

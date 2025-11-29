@@ -99,6 +99,22 @@ export const AddWeight = () => {
           </button>
         </div>
       </form>
+
+      <div className="hidden md:block">
+        <hr className="my-6 border-slate-200" />
+
+        <p className="text-sm mb-2">
+          Regularly tracking your weight helps you spot trends, understand how
+          changes in diet and activity affect your body, and catch early signs
+          of unwanted weight gain or loss. Person OS centralizes your
+          measurements and visualizes trends over time, making it easy to log
+          entries and use the data to make informed health decisions.
+        </p>
+        <p className="text-sm text-slate-500">
+          Note: Soon, you will be able to add weight measurements via
+          integrations like Apple Health or Google Fit.
+        </p>
+      </div>
     </div>
   );
 };

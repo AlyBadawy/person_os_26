@@ -37,10 +37,10 @@ class Api::Health::HeartMeasurementsController < ApplicationController
     service = Health::HeartService.new(current_user)
 
     begin
-      bpm = ApplicationHelper.coerce_numeric(params[:bpm] || params.dig(:data, :bpm))
-      systolic = ApplicationHelper.coerce_numeric(params[:systolic] || params.dig(:data, :systolic))
-      diastolic = ApplicationHelper.coerce_numeric(params[:diastolic] || params.dig(:data, :diastolic))
-      measured_at = ApplicationHelper.parse_time_param(params[:measured_at] || params.dig(:data, :measured_at))
+      bpm = ApplicationHelper.coerce_numeric_or_nil(params[:bpm] || params.dig(:measurement, :bpm))
+      systolic = ApplicationHelper.coerce_numeric_or_nil(params[:systolic] || params.dig(:measurement, :systolic))
+      diastolic = ApplicationHelper.coerce_numeric_or_nil(params[:diastolic] || params.dig(:measurement, :diastolic))
+      measured_at = ApplicationHelper.parse_time_param(params[:measured_at] || params.dig(:measurement, :measured_at))
 
       @measurement = service.record_heart_data(bpm, systolic, diastolic, measured_at)
       render :show, status: :created
@@ -54,10 +54,10 @@ class Api::Health::HeartMeasurementsController < ApplicationController
   def update
     service = Health::HeartService.new(current_user)
     begin
-      bpm = ApplicationHelper.coerce_numeric_or_nil(params[:bpm] || params.dig(:data, :bpm))
-      systolic = ApplicationHelper.coerce_numeric_or_nil(params[:systolic] || params.dig(:data, :systolic))
-      diastolic = ApplicationHelper.coerce_numeric_or_nil(params[:diastolic] || params.dig(:data, :diastolic))
-      measured_at = ApplicationHelper.parse_time_param(params[:measured_at] || params.dig(:data, :measured_at))
+      bpm = ApplicationHelper.coerce_numeric_or_nil(params[:bpm] || params.dig(:measurement, :bpm))
+      systolic = ApplicationHelper.coerce_numeric_or_nil(params[:systolic] || params.dig(:measurement, :systolic))
+      diastolic = ApplicationHelper.coerce_numeric_or_nil(params[:diastolic] || params.dig(:measurement, :diastolic))
+      measured_at = ApplicationHelper.parse_time_param(params[:measured_at] || params.dig(:measurement, :measured_at))
 
       @measurement = service.update_heart_measurement_by_id(params[:id], bpm: bpm, systolic: systolic, diastolic: diastolic, measured_at: measured_at)
       render :show
