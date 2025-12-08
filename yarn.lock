@@ -867,14 +867,14 @@
   resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-8.1.100.tgz#b1f85f3482425fb91e5eba1deb55152ee0bb2f85"
   integrity sha512-j4vJQqz51CDVYv2UafKRu4jiZi5/gTnm7NkyL+VMIgEw3s8jtVtmzu9uItUaZccUg9NJ6o05yVyBAHxNfTuCRA==
 
-"@reduxjs/toolkit@1.x.x || 2.x.x", "@reduxjs/toolkit@^2.10.1":
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.10.1.tgz#b3b9da21335eea409d3498544bcaf83b481a0195"
-  integrity sha512-/U17EXQ9Do9Yx4DlNGU6eVNfZvFJfYpUtRRdLf19PbPjdWBxNlxGZXywQZ1p1Nz8nMkWplTI7iD/23m07nolDA==
+"@reduxjs/toolkit@1.x.x || 2.x.x", "@reduxjs/toolkit@^2.11.1":
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.11.1.tgz#69553cb3f7d60582c7a96682c381a38de98de9f4"
+  integrity sha512-HjhlEREguAyBTGNzRlGNiDHGQ2EjLSPWwdhhpoEqHYy8hWak3Dp6/fU72OfqVsiMb8S6rbfPsWUF24fxpilrVA==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     "@standard-schema/utils" "^0.3.0"
-    immer "^10.2.0"
+    immer "^11.0.0"
     redux "^5.0.1"
     redux-thunk "^3.1.0"
     reselect "^5.1.0"
@@ -2923,10 +2923,15 @@ ignore@^5.2.0, ignore@^5.2.4:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.3.2.tgz#3cd40e729f3643fd87cb04e50bf0eb722bc596f5"
   integrity sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==
 
-immer@^10.1.1, immer@^10.2.0:
+immer@^10.1.1:
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/immer/-/immer-10.2.0.tgz#88a4ce06a1af64172d254b70f7cb04df51c871b1"
   integrity sha512-d/+XTN3zfODyjr89gM3mPq1WNX2B8pYsu7eORitdwyA2sBubnTl3laYlBk4sXY5FUa5qTZGBDPJICVbvqzjlbw==
+
+immer@^11.0.0:
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-11.0.1.tgz#2191adadc17afc94553bfb7a4c0ca95e55ec2489"
+  integrity sha512-naDCyggtcBWANtIrjQEajhhBEuL9b0Zg4zmlWK2CzS6xCWSE39/vvf4LqnMjUAWHBhot4m9MHCM/Z+mfWhUkiA==
 
 import-fresh@^3.2.1:
   version "3.3.1"
@@ -4339,17 +4344,17 @@ react-is@^18.0.0:
     "@types/use-sync-external-store" "^0.0.6"
     use-sync-external-store "^1.4.0"
 
-react-router-dom@^7.9.6:
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-7.9.6.tgz#f2a0d12961d67bd87ab48e5ef42fa1f45beae357"
-  integrity sha512-2MkC2XSXq6HjGcihnx1s0DBWQETI4mlis4Ux7YTLvP67xnGxCvq+BcCQSO81qQHVUTM1V53tl4iVVaY5sReCOA==
+react-router-dom@^7.10.1:
+  version "7.10.1"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-7.10.1.tgz#fddea814d30a3630c11d9ea539932482ff6f744c"
+  integrity sha512-JNBANI6ChGVjA5bwsUIwJk7LHKmqB4JYnYfzFwyp2t12Izva11elds2jx7Yfoup2zssedntwU0oZ5DEmk5Sdaw==
   dependencies:
-    react-router "7.9.6"
+    react-router "7.10.1"
 
-react-router@7.9.6:
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-7.9.6.tgz#003c8de335fdd7390286a478dcfd9579c1826137"
-  integrity sha512-Y1tUp8clYRXpfPITyuifmSoE2vncSME18uVLgaqyxh9H35JWpIfzHo+9y3Fzh5odk/jxPW29IgLgzcdwxGqyNA==
+react-router@7.10.1:
+  version "7.10.1"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-7.10.1.tgz#e973146ed5f10a80783fdb3f27dbe37679557a7c"
+  integrity sha512-gHL89dRa3kwlUYtRQ+m8NmxGI6CgqN+k4XyGjwcFoQwwCWF6xXpOCUlDovkXClS0d0XJN/5q7kc5W3kiFEd0Yw==
   dependencies:
     cookie "^1.0.1"
     set-cookie-parser "^2.6.0"
@@ -4361,10 +4366,10 @@ react@^18.3.1:
   dependencies:
     loose-envify "^1.1.0"
 
-recharts@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/recharts/-/recharts-3.4.1.tgz#f8c7b7ad40c9794eb0113f79c17fb1c1f15e2728"
-  integrity sha512-35kYg6JoOgwq8sE4rhYkVWwa6aAIgOtT+Ob0gitnShjwUwZmhrmy7Jco/5kJNF4PnLXgt9Hwq+geEMS+WrjU1g==
+recharts@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/recharts/-/recharts-3.5.1.tgz#e0aace20004e28309b23574b91daa96b7c9bf852"
+  integrity sha512-+v+HJojK7gnEgG6h+b2u7k8HH7FhyFUzAc4+cPrsjL4Otdgqr/ecXzAnHciqlzV1ko064eNcsdzrYOM78kankA==
   dependencies:
     "@reduxjs/toolkit" "1.x.x || 2.x.x"
     clsx "^2.1.1"
